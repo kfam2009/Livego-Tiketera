@@ -52,10 +52,7 @@ class LivegoMercadoPago {
 			'expires' => true,
 			'expiration_date_to' => date('c', strtotime('+2 days')),
 		);
-		// En modo prueba Mercado Pago rechaza si el email del comprador no es de una cuenta de prueba
-		if (strpos((string)LivegoConfig::get('MP_ACCESS_TOKEN'), 'TEST-') !== 0) {
-			$body['payer'] = array('email' => $order['email'], 'name' => (string)$order['nombre']);
-		}
+		// No se manda el email del comprador: Mercado Pago lo pide en su pantalla y así no choca con cuentas de prueba
 		$r = self::api('POST', '/checkout/preferences', $body);
 		$url = $r['init_point'];
 		if (LivegoConfig::get('MP_SANDBOX') && !empty($r['sandbox_init_point'])) {
