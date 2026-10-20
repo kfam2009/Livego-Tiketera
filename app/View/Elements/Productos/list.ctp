@@ -18,6 +18,7 @@
 							<th>Imagen</th>
 							<th>Estado</th>
 							<th style="text-align:center">Editar</th>
+							<th style="text-align:center">Transmisión</th>
 							<th style="text-align:center">Espectadores</th>
 							<th style="text-align:center">Eliminar</th>
 						</tr>
@@ -37,6 +38,9 @@
 									<?php echo $this->Html->link('<i class="fas fa-pencil-alt"></i>', array('action' => 'edit', $producto['Event']['id']), array('escape' => false)); ?>
 
 
+								</td>
+								<td class="actions" style="text-align:center">
+									<?php echo $this->Html->link('<i class="fas fa-broadcast-tower"></i> ' . ($producto['Event']['fuente'] === 'cloudflare' ? 'vMix/OBS' : 'Link'), array('action' => 'transmision', $producto['Event']['id']), array('escape' => false, 'title' => 'Datos de transmisión, grabaciones y venta')); ?>
 								</td>
 								<td class="actions" style="text-align:center">
 									<?php echo $this->Html->link('<i class="fas fa-ticket-alt"></i> Accesos', array('controller' => 'Suscriptions', 'action' => 'newsuscription', $producto['Event']['id']), array('escape' => false, 'title' => 'Espectadores y accesos')); ?>

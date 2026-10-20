@@ -91,15 +91,62 @@ if (!tablaExiste($pdo, $driver, 'users')) {
 	say('Tablas listas.');
 } else {
 	say('La base ya tiene tablas.');
-	// Actualización: columnas para guardar imágenes en la base
+}
+
+// ---- Actualizaciones de estructura (se pueden correr muchas veces) ----
+function columnaExiste(PDO $pdo, $tabla, $col) {
 	try {
-		$pdo->query('SELECT imagen_data FROM events WHERE 1=0');
+		$pdo->query("SELECT $col FROM $tabla WHERE 1=0");
+		return true;
 	} catch (PDOException $e) {
-		$tipoTexto = $driver === 'mysql' ? 'MEDIUMTEXT' : 'TEXT';
-		$pdo->exec('ALTER TABLE events ADD COLUMN imagen_tipo VARCHAR(50)');
-		$pdo->exec('ALTER TABLE events ADD COLUMN imagen_data ' . $tipoTexto);
-		say('Agregadas columnas de imagen a events.');
+		return false;
 	}
+}
+$txt = $driver === 'mysql' ? 'MEDIUMTEXT' : 'TEXT';
+$money = $driver === 'mysql' ? 'DECIMAL(12,2)' : 'NUMERIC(12,2)';
+$columnas = array(
+	'events' => array(
+		'imagen_tipo' => 'VARCHAR(50)',
+		'imagen_data' => $txt,
+		'fuente' => "VARCHAR(20) DEFAULT 'link'",
+		'cf_input_uid' => 'VARCHAR(64)',
+		'cf_rtmps_url' => 'VARCHAR(255)',
+		'cf_rtmps_key' => 'VARCHAR(255)',
+		'cf_srt_url' => 'VARCHAR(255)',
+		'cf_srt_id' => 'VARCHAR(255)',
+		'cf_srt_pass' => 'VARCHAR(255)',
+		'precio' => $money,
+		'cupo' => 'INTEGER',
+		'venta_activa' => 'SMALLINT DEFAULT 0',
+		'repeticion_dias' => 'INTEGER DEFAULT 7',
+		'youtube_archivo' => 'VARCHAR(255)',
+	),
+);
+foreach ($columnas as $tabla => $cols) {
+	foreach ($cols as $col => $tipo) {
+		if (!columnaExiste($pdo, $tabla, $col)) {
+			$pdo->exec("ALTER TABLE $tabla ADD COLUMN $col $tipo");
+			say("Agregada columna $tabla.$col");
+		}
+	}
+}
+if ($driver === 'pgsql') {
+	$pdo->exec("CREATE TABLE IF NOT EXISTS orders (
+		id serial PRIMARY KEY, event_id integer NOT NULL, email varchar(255) NOT NULL, nombre varchar(255),
+		telefono varchar(50), cantidad integer NOT NULL DEFAULT 1, monto numeric(12,2) NOT NULL DEFAULT 0,
+		estado varchar(20) NOT NULL DEFAULT 'pendiente', token varchar(64) NOT NULL, mp_preference_id varchar(100),
+		mp_payment_id varchar(100), mp_status_detail varchar(100), user_ids text, accesos text, email_enviado smallint DEFAULT 0,
+		created timestamp, modified timestamp)");
+	$pdo->exec("CREATE INDEX IF NOT EXISTS idx_orders_token ON orders (token)");
+	$pdo->exec("CREATE TABLE IF NOT EXISTS settings (clave varchar(100) PRIMARY KEY, valor text, modified timestamp)");
+} elseif ($driver === 'mysql') {
+	$pdo->exec("CREATE TABLE IF NOT EXISTS orders (
+		id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, event_id int(11) NOT NULL, email varchar(255) NOT NULL, nombre varchar(255),
+		telefono varchar(50), cantidad int(11) NOT NULL DEFAULT 1, monto decimal(12,2) NOT NULL DEFAULT 0,
+		estado varchar(20) NOT NULL DEFAULT 'pendiente', token varchar(64) NOT NULL, mp_preference_id varchar(100),
+		mp_payment_id varchar(100), mp_status_detail varchar(100), user_ids text, accesos text, email_enviado tinyint(1) DEFAULT 0,
+		created datetime, modified datetime, KEY idx_orders_token (token)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+	$pdo->exec("CREATE TABLE IF NOT EXISTS settings (clave varchar(100) NOT NULL PRIMARY KEY, valor mediumtext, modified datetime) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 }
 
 $adminUser = getenv('ADMIN_USER');

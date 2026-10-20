@@ -25,7 +25,15 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
-	Router::connect('/', array('controller' => 'events', 'action' => 'index'));
+	// Páginas públicas
+	Router::connect('/', array('controller' => 'public', 'action' => 'index'));
+	Router::connect('/comprar/gracias/*', array('controller' => 'public', 'action' => 'gracias'));
+	Router::connect('/comprar/estado/*', array('controller' => 'public', 'action' => 'estado'));
+	Router::connect('/comprar/*', array('controller' => 'public', 'action' => 'comprar'));
+	Router::connect('/partidos-anteriores', array('controller' => 'public', 'action' => 'archivo'));
+	Router::connect('/pagos/mercadopago', array('controller' => 'public', 'action' => 'mercadopago'));
+	// Panel
+	Router::connect('/admin', array('controller' => 'events', 'action' => 'index'));
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */

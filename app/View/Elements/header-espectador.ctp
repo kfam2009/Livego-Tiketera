@@ -2,7 +2,7 @@
 	<div class="logo-container">
 		<?php echo $this->Html->link(
 			$this->Html->image('logo.jpg', array('alt' => 'Eventos', 'width' => 110, 'height' => 35)),
-			'/',
+			array('controller' => 'events', 'action' => 'shows'),
 			array('class' => 'logo', 'escape' => false)
 		); ?>
 		<button class="btn header-btn-collapse-nav d-lg-none" data-toggle="collapse" data-target=".header-nav">

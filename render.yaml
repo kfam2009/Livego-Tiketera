@@ -30,3 +30,20 @@ services:
         generateValue: true
       - key: APP_DEBUG
         value: "0"
+      # Cloudflare Stream (transmisión protegida desde vMix / OBS)
+      - key: CF_ACCOUNT_ID
+        sync: false
+      - key: CF_API_TOKEN
+        sync: false
+      - key: CF_CUSTOMER_CODE
+        sync: false
+      # Mercado Pago (Access Token de prueba o de producción)
+      - key: MP_ACCESS_TOKEN
+        sync: false
+      # Emails con Brevo
+      - key: BREVO_API_KEY
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+      - key: MAIL_FROM_NAME
+        value: LiveGo

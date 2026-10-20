@@ -2,7 +2,7 @@
 	<div class="logo-container">
 		<?php echo $this->Html->link(
 			$this->Html->image('logo.jpg', array('alt' => 'Eventos', 'width' => 110, 'height' => 35)),
-			'/',
+			array('controller' => 'events', 'action' => 'index'),
 			array('class' => 'logo', 'escape' => false)
 		); ?>
 		<button class="btn header-btn-collapse-nav d-lg-none" data-toggle="collapse" data-target=".header-nav">
@@ -28,6 +28,12 @@
 							</li>
 						</ul>
 
+					</li>
+					<li>
+						<?php echo $this->Html->link('Ventas', array('controller' => 'Orders', 'action' => 'index'), array('class' => 'nav-link')); ?>
+					</li>
+					<li>
+						<?php echo $this->Html->link('Ver cartelera pública <i class="fas fa-external-link-alt"></i>', '/', array('class' => 'nav-link', 'target' => '_blank', 'escape' => false)); ?>
 					</li>
 					<li class="dropdown">
 						<?php echo $this->Html->link('Usuarios', array('controller' => 'Users', 'action' => 'index'), array('class' => 'nav-link dropdown-toggle')); ?>

@@ -113,6 +113,9 @@ CakeLog::config('error', array(
 // Hora de Argentina para comparar inicio/fin de los eventos (se puede cambiar con TZ)
 date_default_timezone_set(getenv('APP_TIMEZONE') ?: 'America/Argentina/Buenos_Aires');
 
+// Caché corta para no consultar Cloudflare en cada visita
+Cache::config('livego', array('engine' => 'File', 'duration' => '+2 minutes', 'prefix' => 'livego_', 'path' => CACHE . 'persistent' . DS));
+
 // PHP 8 compat: strftime polyfill
 require_once ROOT . DS . 'vendors' . DS . 'strftime' . DS . 'php-8.1-strftime.php';
 

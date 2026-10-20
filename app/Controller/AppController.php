@@ -41,7 +41,9 @@ class AppController extends Controller {
             'loginAction'=>array('controller' => 'Users', 'action' => 'login'),
             'loginRedirect' => array('controller' => 'Events', 'action' => 'index'),
             'logoutRedirect' => array('controller' => 'Users', 'action' => 'login'),
-            'authorize' => array('Controller')
+            'authorize' => array('Controller'),
+            // Solo usuarios activos (las entradas devueltas quedan inactivas)
+            'authenticate' => array('Form' => array('scope' => array('User.activo' => 1)))
         )
     );
 

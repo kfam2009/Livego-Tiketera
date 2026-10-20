@@ -20,6 +20,20 @@ Un acceso no se puede compartir: si se usa en otro dispositivo, se cierra la ses
 
 El espectador entra al mismo link de login con su usuario (o email) y clave, y ve "Mis Eventos".
 
+## Venta online, transmisión protegida y repeticiones
+
+- **Cartelera pública** (`/`): partidos con venta activa. **Comprar** → Mercado Pago (Checkout Pro) →
+  al aprobarse el pago se crean solos los usuarios y claves, se muestran en pantalla y se mandan por email.
+  Aviso de pagos en `/pagos/mercadopago` (se verifica siempre contra la API de Mercado Pago).
+  Pagos devueltos o desconocidos → los usuarios quedan inactivos.
+- **Transmisión propia** (evento con "Propia y protegida"): se crea una entrada en Cloudflare Stream;
+  en **Eventos → vMix/OBS** están el servidor RTMPS/SRT y la clave. El espectador ve el video con un
+  token firmado que vence (no se puede compartir el link). Se graba solo.
+- **Repetición**: después del final, los que compraron pueden ver la grabación los días que diga el evento.
+  Desde la misma página se baja el MP4.
+- **Partidos anteriores** (`/partidos-anteriores`): eventos con link de YouTube cargado.
+- **Ventas** (menú del admin): compras, estados, reenviar email, revisar pagos pendientes, ver accesos.
+
 ## Configuración (variables de entorno)
 
 | Variable | Para qué |
@@ -28,6 +42,11 @@ El espectador entra al mismo link de login con su usuario (o email) y clave, y v
 | `DB_DRIVER`, `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASS` | Alternativa a `DATABASE_URL` (`DB_DRIVER`: mysql o postgres) |
 | `ADMIN_USER`, `ADMIN_PASSWORD` | Al arrancar crea o actualiza ese admin (así se recupera la clave) |
 | `SECURITY_SALT` | Clave interna para cifrar contraseñas (Render la genera). Si cambia, las claves existentes dejan de andar |
+| `CF_ACCOUNT_ID`, `CF_API_TOKEN` | Cloudflare Stream (token con permiso Account → Stream → Edit) |
+| `CF_CUSTOMER_CODE` | El `xxxx` de `customer-xxxx.cloudflarestream.com` (opcional, se detecta solo) |
+| `MP_ACCESS_TOKEN` | Mercado Pago: Access Token (de prueba `TEST-…` o de producción `APP_USR-…`) |
+| `BREVO_API_KEY`, `MAIL_FROM`, `MAIL_FROM_NAME` | Emails con los accesos (Brevo). `MAIL_FROM` tiene que estar verificado en Brevo |
+| `APP_URL` | URL pública si no es la de Render (dominio propio) |
 | `APP_DEBUG` | `0` en producción (por defecto). `2` muestra errores para depurar |
 | `APP_TIMEZONE` | Por defecto `America/Argentina/Buenos_Aires` |
 | `IMPORTAR_DATOS` | `0` para NO cargar los usuarios viejos en una base nueva |
