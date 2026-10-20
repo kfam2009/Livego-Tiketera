@@ -44,6 +44,30 @@ class OrdersController extends AppController
 		$this->set('emailListo', LivegoConfig::emailListo());
 	}
 
+	/** Diagnóstico de la conexión con Mercado Pago (no muestra el token completo). */
+	public function diagnostico()
+	{
+		$this->autoRender = false;
+		App::uses('LivegoHttp', 'Lib/Livego');
+		$tok = (string)LivegoConfig::get('MP_ACCESS_TOKEN');
+		$out = array(
+			'token_prefijo' => substr($tok, 0, 12),
+			'token_final' => substr($tok, -10),
+			'token_largo' => strlen($tok),
+			'token_espacios' => (bool)preg_match('/\s/', $tok),
+		);
+		try {
+			$r = LivegoHttp::request('GET', 'https://api.mercadopago.com/users/me', array('Authorization' => 'Bearer ' . trim($tok)));
+			$out['users_me_status'] = $r['code'];
+			$out['users_me'] = is_array($r['json']) ? array_intersect_key($r['json'], array_flip(array('id', 'nickname', 'site_id', 'tags', 'status', 'message', 'error', 'code', 'blocked_by'))) : substr($r['raw'], 0, 200);
+		} catch (Exception $e) {
+			$out['error'] = $e->getMessage();
+		}
+		$this->response->type('json');
+		$this->response->body(json_encode($out, JSON_PRETTY_PRINT));
+		return $this->response;
+	}
+
 	/** Vuelve a mandar el email con los accesos. */
 	public function reenviar($id = null)
 	{
