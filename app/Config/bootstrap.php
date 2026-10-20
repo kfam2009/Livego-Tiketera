@@ -128,3 +128,62 @@ function livego_imagen_url($event) {
 	}
 	return 'eventos/' . ($img !== '' ? $img : 'banner.jpeg');
 }
+
+/**
+ * Convierte el link que pega el admin en uno que se pueda embeber en la página.
+ * YouTube (watch, youtu.be, /live/, /shorts/, canal), Vimeo, Facebook, Twitch y Kick.
+ * Si no lo reconoce, lo devuelve tal cual (puede ser ya un link de "embed" o un reproductor propio).
+ */
+function livego_embed_url($link, $host = null) {
+	$link = trim((string)$link);
+	if ($link === '') {
+		return '';
+	}
+	if (!preg_match('#^https?://#i', $link)) {
+		$link = 'https://' . $link;
+	}
+	$p = parse_url($link);
+	$h = isset($p['host']) ? strtolower(preg_replace('/^(www\.|m\.)/', '', $p['host'])) : '';
+	$path = isset($p['path']) ? $p['path'] : '';
+	parse_str(isset($p['query']) ? $p['query'] : '', $q);
+
+	// YouTube
+	if ($h === 'youtu.be') {
+		$id = trim($path, '/');
+		return 'https://www.youtube.com/embed/' . rawurlencode($id) . '?autoplay=1&rel=0';
+	}
+	if ($h === 'youtube.com' || $h === 'youtube-nocookie.com' || $h === 'music.youtube.com') {
+		if (strpos($path, '/embed/') === 0) {
+			return $link;
+		}
+		if (!empty($q['v'])) {
+			return 'https://www.youtube.com/embed/' . rawurlencode($q['v']) . '?autoplay=1&rel=0';
+		}
+		if (preg_match('#^/(live|shorts)/([^/?]+)#', $path, $m)) {
+			return 'https://www.youtube.com/embed/' . rawurlencode($m[2]) . '?autoplay=1&rel=0';
+		}
+		if (preg_match('#^/channel/([^/?]+)#', $path, $m)) {
+			return 'https://www.youtube.com/embed/live_stream?channel=' . rawurlencode($m[1]) . '&autoplay=1';
+		}
+	}
+	// Vimeo
+	if ($h === 'vimeo.com' && preg_match('#^/(?:event/)?(\d+)#', $path, $m)) {
+		return (strpos($path, '/event/') === 0)
+			? 'https://vimeo.com/event/' . $m[1] . '/embed'
+			: 'https://player.vimeo.com/video/' . $m[1] . '?autoplay=1';
+	}
+	// Facebook (videos y vivos)
+	if (in_array($h, array('facebook.com', 'fb.watch', 'web.facebook.com'), true) && strpos($path, '/plugins/') !== 0) {
+		return 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode($link) . '&show_text=false&autoplay=true';
+	}
+	// Twitch (necesita el dominio donde se muestra)
+	if ($h === 'twitch.tv' && preg_match('#^/([A-Za-z0-9_]+)/?$#', $path, $m)) {
+		$parent = $host ?: (isset($_SERVER['HTTP_HOST']) ? preg_replace('/:\d+$/', '', $_SERVER['HTTP_HOST']) : 'localhost');
+		return 'https://player.twitch.tv/?channel=' . rawurlencode($m[1]) . '&parent=' . rawurlencode($parent);
+	}
+	// Kick
+	if ($h === 'kick.com' && preg_match('#^/([A-Za-z0-9_-]+)/?$#', $path, $m)) {
+		return 'https://player.kick.com/' . rawurlencode($m[1]);
+	}
+	return $link;
+}

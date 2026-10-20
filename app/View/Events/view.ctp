@@ -1,53 +1,45 @@
 <?php
-echo $this->element('section-header', array('section' => $event['Event']['titulo'], 'section_url' => 'Evento en Vivo'));
+$ev = $event['Event'];
+$embed = livego_embed_url($ev['link']);
+echo $this->element('section-header', array('section' => h($ev['titulo']), 'section_url' => 'Evento en Vivo'));
 ?>
-<div class="row" style ="margin-top:20px;">
-	<div class="col">
-		<div class="row">
-			<div class="col-lg-3 col-xl-3 mb-4 mb-xl-0">
-
-				<section class="card">
-					<div class="card-body">
-						<div class="thumb-info mb-3">
-							<?php echo $this->Html->image(livego_imagen_url($event['Event']), array('class'=>"rounded img-fluid", 'alt'=>h($event['Event']['titulo'])));?>
-
-							<div class="thumb-info-title">
-								<span class="thumb-info-inner"><?php echo $event['Event']['titulo']; ?></span>
-								<span class="thumb-info-type"><?php echo (date_format(date_create($event['Event']['fecha']), 'd-m-Y')); ?></span>
-							</div>
-						</div>
-
-						<hr class="dotted short">
-						<h5 class="mb-2 mt-3"><i class="fas fa-clock mr-1"></i><?php echo (date_format(date_create($event['Event']['fecha']), 'd-m-Y')); ?></h5>
-						<p class="text-2"></p>
-						<div class="clearfix">
-
-						<h5 class="mb-2 mt-3">Descripción:</h5>
-						<p class="text-2"><?php echo $event['Event']['descripcion']; ?></p>
-						<div class="clearfix">
-
-						<h5 class="mb-2 mt-3">Horarios:</h5>
-						<p class="text-2"><?php echo $event['Event']['horario']; ?></p>
-						<div class="clearfix">
-
-						</div>
-
-					</div>
-				</section>
-
-			</div>
-			<div class="col-lg-9 col-xl-9" style="margin-top:40px;">
-				<div class="tabs">
-
-					<div class="tab-content">
-						<div id="overview" class="tab-pane active">
-							<div class="p-3">
-									<iframe width="100%" height="720" src="<?php echo $event['Event']['link']; ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-							</div>
-						</div>
-					</div>
+<style>
+	.lg-player { position: relative; width: 100%; padding-top: 56.25%; background: #000; border-radius: 6px; overflow: hidden; }
+	.lg-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+	.lg-info img { width: 100%; height: auto; border-radius: 6px; display: block; }
+	.lg-info h3 { margin: 15px 0 5px; font-weight: 700; line-height: 1.2; }
+	.lg-fecha { display: inline-block; background: #0088cc; color: #fff; padding: 2px 10px; border-radius: 4px; font-size: .9em; }
+	.lg-info h5 { margin: 18px 0 4px; }
+	.lg-ayuda { margin-top: 10px; font-size: .95em; }
+</style>
+<div class="row" style="margin-top:20px;">
+	<div class="col-lg-9 col-xl-9 order-lg-2 mb-4">
+		<section class="card">
+			<div class="card-body p-2">
+				<div class="lg-player">
+					<iframe src="<?php echo h($embed); ?>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+				</div>
+				<div class="lg-ayuda text-right">
+					¿No se ve? <a href="<?php echo h($ev['link']); ?>" target="_blank" rel="noopener">Abrir la transmisión en otra pestaña <i class="fas fa-external-link-alt"></i></a>
 				</div>
 			</div>
-		</div>
+		</section>
+	</div>
+	<div class="col-lg-3 col-xl-3 order-lg-1">
+		<section class="card">
+			<div class="card-body lg-info">
+				<?php echo $this->Html->image(livego_imagen_url($ev), array('alt' => h($ev['titulo']))); ?>
+				<h3><?php echo h($ev['titulo']); ?></h3>
+				<span class="lg-fecha"><i class="fas fa-clock mr-1"></i><?php echo date_format(date_create($ev['fecha']), 'd-m-Y H:i'); ?> hs</span>
+				<?php if (!empty($ev['descripcion'])) { ?>
+					<h5>Descripción</h5>
+					<p><?php echo nl2br(h($ev['descripcion'])); ?></p>
+				<?php } ?>
+				<?php if (!empty($ev['horario'])) { ?>
+					<h5>Horarios</h5>
+					<p><?php echo nl2br(h($ev['horario'])); ?></p>
+				<?php } ?>
+			</div>
+		</section>
 	</div>
 </div>

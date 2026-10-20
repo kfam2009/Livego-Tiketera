@@ -42,6 +42,7 @@
 						<label class="col-lg-12 control-label pt-2" for="link">Link Show</label>
 						<div class="col-lg-12">
 							<?php echo $this->Form->input('link', array('label' => false, 'required' => true, 'class' => 'form-control', 'div' => false)); ?>
+							<small class="form-text text-muted">Pegá el link del vivo tal cual: YouTube, Vimeo, Facebook, Twitch o Kick (se adapta solo). En YouTube, el video tiene que tener permitida la opción <em>"Permitir insertar"</em>.</small>
 						</div>
 					</div>
 
