@@ -19,6 +19,7 @@ class LivegoMercadoPago {
 			if (is_array($r['json']) && !empty($r['json']['message'])) {
 				$msg .= ': ' . $r['json']['message'];
 			}
+			error_log('[livego] ' . $msg . ' | ' . substr((string)$r['raw'], 0, 300));
 			throw new RuntimeException($msg);
 		}
 		return $r['json'];

@@ -20,6 +20,7 @@ class LivegoCloudflare {
 			if (is_array($j) && !empty($j['errors'][0]['message'])) {
 				$msg .= ': ' . $j['errors'][0]['message'];
 			}
+			error_log('[livego] ' . $msg);
 			throw new RuntimeException($msg);
 		}
 		return isset($j['result']) ? $j['result'] : null;
