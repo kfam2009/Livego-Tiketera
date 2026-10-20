@@ -1,0 +1,25 @@
+# Texto: git detecta solo; los binarios NO se tocan.
+* text=auto
+*.bat eol=crlf
+*.sh text eol=lf
+bin/* text eol=lf
+Dockerfile text eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.JPG binary
+*.JPEG binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.mo binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.otf binary
+*.svg text
+*.swf binary
+*.zip binary

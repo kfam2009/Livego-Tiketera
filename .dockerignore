@@ -1,0 +1,5 @@
+.git
+app/tmp/logs/*
+app/tmp/cache/*
+app/tmp/sessions/*
+*.sqlite

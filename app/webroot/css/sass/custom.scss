@@ -1,0 +1,37 @@
+@import "config/imports";
+
+/* Add here all your CSS customizations */
+.userbox.show {
+	.dropdown-menu {
+		left: -28px !important;
+	}
+}
+
+.img-item-list {
+	max-width: 50px;
+	max-height: 50px;
+}
+
+.img-edit-preview {
+	text-align: center;
+	h5 {
+		font-weight: bold;
+	}
+
+	img {
+		max-width: 120px;
+		max-height: 120px;
+	}
+}
+
+/*Auth*/
+.logo-auth {
+	margin-top: 1.5rem;
+	margin-left: 2rem;
+}
+
+.auth-section {
+	.card-title-sign {
+		background-color: #fff;
+	}
+}

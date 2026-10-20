@@ -1,0 +1,32 @@
+# Para probar en tu PC con Docker Desktop:  docker compose up
+# Después entrá a http://localhost:8080
+services:
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: livego
+      MYSQL_USER: livego
+      MYSQL_PASSWORD: livego_local
+      MYSQL_ROOT_PASSWORD: root_local
+    volumes:
+      - dbdata:/var/lib/mysql
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: db
+      DB_NAME: livego
+      DB_USER: livego
+      DB_PASS: livego_local
+      ADMIN_USER: admin
+      ADMIN_PASSWORD: cambiar-esta-clave
+      APP_DEBUG: "0"
+    volumes:
+      - imagenes:/var/www/html/app/webroot/img/eventos
+    depends_on:
+      - db
+volumes:
+  dbdata:
+  imagenes:

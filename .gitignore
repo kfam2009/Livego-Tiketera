@@ -1,0 +1,10 @@
+# Datos personales del sistema viejo: NO subir a GitHub
+/db/datos-originales.sql
+# Archivos generados
+/app/tmp/*
+!/app/tmp/.gitkeep
+*.sqlite
+.DS_Store
+._*
+Thumbs.db
+.idea

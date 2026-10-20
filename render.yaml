@@ -1,0 +1,31 @@
+# Render Blueprint: New + > Blueprint > elegí este repo.
+# Crea la web (Docker) y la base Postgres, y las conecta solas.
+# Arranca en plan gratis. Para pasar a pago: en el panel de cada servicio > Settings > Instance Type
+# (la base gratis vence a los 30 días: pasala a "Basic" antes).
+databases:
+  - name: livego-db
+    plan: free
+    databaseName: livego
+    user: livego
+
+services:
+  - type: web
+    name: livego-ticketera
+    runtime: docker
+    plan: free
+    healthCheckPath: /users/login
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: livego-db
+          property: connectionString
+      - key: SECURITY_SALT
+        generateValue: true
+      - key: SECURITY_CIPHER_SEED
+        value: "48291736501928374650192837465019"
+      - key: ADMIN_USER
+        value: admin
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: APP_DEBUG
+        value: "0"
