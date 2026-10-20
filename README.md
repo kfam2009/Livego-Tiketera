@@ -43,7 +43,7 @@ dentro de la base, así que no hace falta disco.
 1. En Render: **New + → Blueprint** → elegí este repo. Lee `render.yaml` y crea:
    - `livego-ticketera` (web, plan Free)
    - `livego-db` (Postgres, plan Free)
-2. Te va a pedir **ADMIN_PASSWORD**: es la clave del usuario `admin`. Ponela y dale **Apply**.
+2. Dale **Apply**. Render genera sola la clave del admin: la ves en el servicio web → **Environment → ADMIN_PASSWORD** (ojito para mostrarla). Si querés otra, la cambiás ahí y redeployás.
 3. Esperá el deploy (5–10 min la primera vez). La URL queda tipo `https://livego-ticketera.onrender.com`.
    Las tablas se crean solas en el primer arranque.
 4. Entrá a `/users/login` con `admin` y tu clave.

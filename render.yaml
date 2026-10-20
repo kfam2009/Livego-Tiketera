@@ -1,5 +1,6 @@
 # Render Blueprint: New + > Blueprint > elegí este repo.
 # Crea la web (Docker) y la base Postgres, y las conecta solas.
+# La clave del admin la genera Render: verla en el servicio > Environment > ADMIN_PASSWORD.
 # Arranca en plan gratis. Para pasar a pago: en el panel de cada servicio > Settings > Instance Type
 # (la base gratis vence a los 30 días: pasala a "Basic" antes).
 databases:
@@ -26,6 +27,6 @@ services:
       - key: ADMIN_USER
         value: admin
       - key: ADMIN_PASSWORD
-        sync: false
+        generateValue: true
       - key: APP_DEBUG
         value: "0"
