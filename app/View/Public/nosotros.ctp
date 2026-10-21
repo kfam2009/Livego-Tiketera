@@ -60,6 +60,29 @@ $wa = 'https://wa.me/5492914254860?text=' . rawurlencode('Hola LiveGo! Tengo un 
 	.qs-final .qs-cta { justify-content: center; }
 	.btn-wa { background: #25d366; border: 1px solid #25d366; color: #0b2b17; font-weight: 700; }
 	.btn-wa:hover { background: #1fbe5b; color: #0b2b17; }
+	.qs-cob { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 18px; align-items: stretch; }
+	@media (max-width: 860px) { .qs-cob { grid-template-columns: 1fr; } }
+	.qs-pais { position: relative; border: 1px solid var(--line); border-radius: 18px; padding: 24px; overflow: hidden;
+		background: radial-gradient(420px 260px at 20% 0%, rgba(76,201,240,.16), transparent 70%), linear-gradient(180deg, var(--card-2), var(--card)); }
+	.qs-pais .grande { font-family: var(--display); font-weight: 700; font-size: clamp(2.4rem, 5vw, 3.4rem); line-height: .95; margin: 6px 0 10px; }
+	.qs-pais .grande em { font-style: normal; color: var(--cyan); }
+	.qs-pais p { color: var(--muted); margin: 0 0 16px; }
+	.qs-radar { position: absolute; right: -40px; bottom: -40px; width: 200px; height: 200px; border-radius: 50%; pointer-events: none;
+		background: repeating-radial-gradient(circle, rgba(76,201,240,.18) 0 1px, transparent 1px 26px); }
+	.qs-chips { display: flex; flex-wrap: wrap; gap: 8px; position: relative; }
+	.qs-chips span { border: 1px solid var(--line-2); background: var(--bg-2); color: var(--muted); font-size: .82rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; }
+	.qs-zonas { display: grid; grid-template-rows: 1fr 1fr; gap: 18px; }
+	.qs-zona { position: relative; border-radius: 18px; padding: 22px 22px 22px 86px; border: 1px solid; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+	.qs-zona.ba { border-color: rgba(237,56,62,.55); background: radial-gradient(400px 200px at 100% 0%, rgba(237,56,62,.2), transparent 70%), linear-gradient(180deg, #24262c, #18191e); }
+	.qs-zona.nq { border-color: rgba(60,207,126,.55); background: radial-gradient(400px 200px at 100% 0%, rgba(60,207,126,.18), transparent 70%), linear-gradient(180deg, #24262c, #18191e); }
+	.qs-pin { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; font-size: 1.3rem; }
+	.qs-zona.ba .qs-pin { background: var(--red); color: #fff; box-shadow: 0 0 0 6px rgba(237,56,62,.15); }
+	.qs-zona.nq .qs-pin { background: var(--green); color: #0b2b17; box-shadow: 0 0 0 6px rgba(60,207,126,.15); }
+	.qs-zona .tag { font-size: .7rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 2px; }
+	.qs-zona.ba .tag { color: var(--red); }
+	.qs-zona.nq .tag { color: var(--green); }
+	.qs-zona h3 { font-size: 1.7rem; margin: 0 0 4px; }
+	.qs-zona p { color: var(--muted); margin: 0; font-size: .95rem; }
 	@media (prefers-reduced-motion: reduce) { .qs-item { transition: none; } .qs-rec::before { animation: none; } }
 </style>
 
@@ -77,7 +100,7 @@ $wa = 'https://wa.me/5492914254860?text=' . rawurlencode('Hola LiveGo! Tengo un 
 		<span class="qs-rec">REC</span>
 		<div class="num"><?php echo $anios; ?><span>+</span></div>
 		<div class="rot">años transmitiendo en vivo</div>
-		<p>Mucho rodaje, muchas transmisiones y la tranquilidad de un equipo que sabe resolver cuando el directo aprieta.</p>
+		<p>Mucho rodaje, muchas transmisiones y la tranquilidad de un equipo que sabe resolver cuando el directo aprieta. <strong style="color:var(--text)">En todo el país.</strong></p>
 	</div>
 </section>
 
@@ -105,6 +128,37 @@ $wa = 'https://wa.me/5492914254860?text=' . rawurlencode('Hola LiveGo! Tengo un 
 			<div class="qs-ico y"><i class="fas fa-users-cog"></i></div>
 			<h3>Equipo técnico</h3>
 			<p>Gente con experiencia en el lugar y del otro lado de la señal, para que el directo no dependa de la suerte.</p>
+		</div>
+	</div>
+</section>
+
+<section class="qs-seccion">
+	<div class="lg-eyebrow">Cobertura</div>
+	<h2>Vamos a donde esté tu evento</h2>
+	<p>Transmitimos en todo el país, con fuerte presencia en la provincia de Buenos Aires y en Neuquén.</p>
+	<div class="qs-cob">
+		<div class="qs-pais">
+			<div class="qs-radar" aria-hidden="true"></div>
+			<div class="lg-eyebrow mb-0">Alcance nacional</div>
+			<div class="grande">Todo el <em>país</em>.</div>
+			<p>Viajamos con el equipo a donde haga falta. Y cuando conviene, producimos en forma remota con nuestras herramientas, para llegar más lejos con menos costo.</p>
+			<div class="qs-chips">
+				<span>Partidos y torneos</span><span>Shows y recitales</span><span>Eventos institucionales</span><span>Producción remota</span>
+			</div>
+		</div>
+		<div class="qs-zonas">
+			<div class="qs-zona ba">
+				<div class="qs-pin"><i class="fas fa-map-marker-alt"></i></div>
+				<div class="tag">Fuerte presencia</div>
+				<h3>Provincia de Buenos Aires</h3>
+				<p>Es donde más transmitimos: conocemos el terreno, los clubes y la conectividad de cada lugar.</p>
+			</div>
+			<div class="qs-zona nq">
+				<div class="qs-pin"><i class="fas fa-map-marker-alt"></i></div>
+				<div class="tag">Fuerte presencia</div>
+				<h3>Neuquén</h3>
+				<p>Una de nuestras zonas fuertes: transmitimos los eventos de la región con la misma calidad de siempre.</p>
+			</div>
 		</div>
 	</div>
 </section>

@@ -140,7 +140,7 @@
 		<div class="inner">
 			<div>
 				<strong>LiveGo! Video Streaming</strong><br>
-				Transmisiones en vivo desde 2018 · <a href="/quienes-somos">Quiénes somos</a> · © <?php echo date('Y'); ?>
+				Transmisiones en vivo desde 2018 · Todo el país · <a href="/quienes-somos">Quiénes somos</a> · © <?php echo date('Y'); ?>
 			</div>
 			<div class="lg-contactos">
 				<?php foreach ($contactos as $num => $txt) { ?>
