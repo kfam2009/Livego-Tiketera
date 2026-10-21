@@ -127,6 +127,7 @@
 			<nav class="lg-nav" aria-label="Principal">
 				<?php echo $this->Html->link('Próximos eventos', '/', array('class' => ($aqui === '/' ? 'activo' : ''))); ?>
 				<?php echo $this->Html->link('Eventos anteriores', '/eventos-anteriores', array('class' => (strpos($aqui, 'anteriores') !== false ? 'activo' : ''))); ?>
+				<?php echo $this->Html->link('Quiénes somos', '/quienes-somos', array('class' => (strpos($aqui, 'quienes') !== false ? 'activo' : ''))); ?>
 				<?php echo $this->Html->link('<i class="fas fa-user mr-1"></i> Ingresar', '/users/login', array('class' => 'lg-ingresar', 'escape' => false)); ?>
 			</nav>
 		</div>
@@ -139,7 +140,7 @@
 		<div class="inner">
 			<div>
 				<strong>LiveGo! Video Streaming</strong><br>
-				Transmisiones en vivo · © <?php echo date('Y'); ?>
+				Transmisiones en vivo desde 2018 · <a href="/quienes-somos">Quiénes somos</a> · © <?php echo date('Y'); ?>
 			</div>
 			<div class="lg-contactos">
 				<?php foreach ($contactos as $num => $txt) { ?>

@@ -33,3 +33,13 @@
 </div>
 <?php } ?>
 <p class="text-muted mt-2">¿Ya compraste? <?php echo $this->Html->link('Ingresá con tu usuario y clave', '/users/login'); ?>.</p>
+<div class="lg-card mt-4" style="height:auto;border-color:rgba(237,56,62,.45)">
+	<div class="body" style="flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px">
+		<div>
+			<div class="lg-eyebrow mb-1">¿Organizás eventos?</div>
+			<h3 style="font-size:1.6rem">Transmitilo con LiveGo y vendé entradas online</h3>
+			<span class="text-muted">Más de <?php echo (int)date('Y') - 2018; ?> años haciendo transmisiones en vivo con equipo técnico propio.</span>
+		</div>
+		<?php echo $this->Html->link('Conocenos <i class="fas fa-arrow-right ml-1"></i>', '/quienes-somos', array('class' => 'btn btn-lg-comprar', 'escape' => false)); ?>
+	</div>
+</div>

@@ -17,7 +17,7 @@ class PublicController extends AppController
 	public function beforeFilter()
 	{
 		parent::beforeFilter();
-		$this->Auth->allow('index', 'comprar', 'gracias', 'estado', 'archivo', 'mercadopago');
+		$this->Auth->allow('index', 'comprar', 'gracias', 'estado', 'archivo', 'mercadopago', 'nosotros');
 		$this->layout = 'publico';
 	}
 
@@ -172,6 +172,12 @@ class PublicController extends AppController
 		$this->response->type('json');
 		$this->response->body(json_encode(array('estado' => $order['Order']['estado'])));
 		return $this->response;
+	}
+
+	/** Quiénes somos. */
+	public function nosotros()
+	{
+		$this->set('title_for_layout', 'Quiénes somos');
 	}
 
 	/** Eventos anteriores publicados en YouTube. */
