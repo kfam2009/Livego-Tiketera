@@ -38,7 +38,7 @@ class LivegoMailer {
 			. '<h2 style="margin:0 0 4px">¡Gracias por tu compra!</h2>'
 			. '<p style="margin:0 0 16px">Ya podés ver <strong>' . $e($evento) . '</strong>' . ($fecha ? ' (' . $e($fecha) . ')' : '') . '.</p>'
 			. '<table style="border-collapse:collapse;margin:0 0 16px"><tr style="background:#f2f2f2"><th style="padding:8px 12px;border:1px solid #ddd;text-align:left">Entrada</th><th style="padding:8px 12px;border:1px solid #ddd;text-align:left">Usuario</th><th style="padding:8px 12px;border:1px solid #ddd;text-align:left">Clave</th></tr>' . $filas . '</table>'
-			. '<p><a href="' . $e($urlIngreso) . '" style="display:inline-block;background:#0088cc;color:#fff;padding:10px 18px;border-radius:4px;text-decoration:none">Entrar a ver el partido</a></p>'
+			. '<p><a href="' . $e($urlIngreso) . '" style="display:inline-block;background:#ed383e;color:#fff;padding:10px 18px;border-radius:4px;text-decoration:none">Entrar a ver el evento</a></p>'
 			. '<p style="font-size:13px;color:#666">Cada acceso es personal: si se usa en otro dispositivo, se cierra en el anterior.</p></div>';
 		return self::enviar($para, $nombre, 'Tu acceso para ' . $evento, $html);
 	}

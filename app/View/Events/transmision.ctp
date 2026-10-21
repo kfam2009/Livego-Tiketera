@@ -80,7 +80,7 @@ $copiar = function ($valor, $id) {
 					<?php } ?>
 					</tbody>
 				</table>
-				<p class="text-muted small mt-2 mb-0">Para archivar: bajá el MP4, subilo a YouTube y pegá el link en "Partidos anteriores" del evento.</p>
+				<p class="text-muted small mt-2 mb-0">Para archivar: bajá el MP4, subilo a YouTube y pegá el link en "Eventos anteriores" del evento.</p>
 				<?php } ?>
 			</div>
 		</section>

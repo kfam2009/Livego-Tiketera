@@ -30,7 +30,8 @@
 	Router::connect('/comprar/gracias/*', array('controller' => 'public', 'action' => 'gracias'));
 	Router::connect('/comprar/estado/*', array('controller' => 'public', 'action' => 'estado'));
 	Router::connect('/comprar/*', array('controller' => 'public', 'action' => 'comprar'));
-	Router::connect('/partidos-anteriores', array('controller' => 'public', 'action' => 'archivo'));
+	Router::connect('/eventos-anteriores', array('controller' => 'public', 'action' => 'archivo'));
+	Router::redirect('/partidos-anteriores', '/eventos-anteriores', array('status' => 301));
 	Router::connect('/pagos/mercadopago', array('controller' => 'public', 'action' => 'mercadopago'));
 	// Panel
 	Router::connect('/admin', array('controller' => 'events', 'action' => 'index'));

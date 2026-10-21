@@ -124,12 +124,12 @@
 							<small class="form-text text-muted">Días después del final en que los que compraron pueden ver la grabación (solo transmisión propia).</small>
 						</div>
 					</div>
-					<div class="col-lg-12"><hr><h4 class="mb-0">Partidos anteriores</h4></div>
+					<div class="col-lg-12"><hr><h4 class="mb-0">Eventos anteriores</h4></div>
 					<div class="col-lg-6">
-						<label class="col-lg-12 control-label pt-2" for="EventYoutubeArchivo">Link de YouTube del partido completo</label>
+						<label class="col-lg-12 control-label pt-2" for="EventYoutubeArchivo">Link de YouTube del evento completo</label>
 						<div class="col-lg-12">
 							<?php echo $this->Form->input('youtube_archivo', array('label' => false, 'div' => false, 'class' => 'form-control', 'required' => false, 'placeholder' => 'https://www.youtube.com/watch?v=…', 'id' => 'EventYoutubeArchivo')); ?>
-							<small class="form-text text-muted">Si lo completás, el partido aparece gratis en la sección pública "Partidos anteriores".</small>
+							<small class="form-text text-muted">Si lo completás, el evento aparece gratis en la sección pública "Eventos anteriores".</small>
 						</div>
 					</div>
 

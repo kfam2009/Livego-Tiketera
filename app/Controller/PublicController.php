@@ -5,7 +5,7 @@ App::uses('LivegoMercadoPago', 'Lib/Livego');
 App::uses('LivegoVentas', 'Lib/Livego');
 
 /**
- * Páginas públicas: cartelera, compra de entradas, aviso de Mercado Pago y partidos anteriores.
+ * Páginas públicas: cartelera, compra de entradas, aviso de Mercado Pago y eventos anteriores.
  */
 class PublicController extends AppController
 {
@@ -41,10 +41,10 @@ class PublicController extends AppController
 		);
 	}
 
-	/** Cartelera: partidos a la venta. */
+	/** Cartelera: eventos a la venta. */
 	public function index()
 	{
-		$this->set('title_for_layout', 'Próximos partidos');
+		$this->set('title_for_layout', 'Próximos eventos');
 		$events = $this->Event->find('all', array(
 			'conditions' => $this->enVenta(),
 			'fields' => array('Event.id', 'Event.titulo', 'Event.descripcion', 'Event.imagen', 'Event.fecha', 'Event.fechafin', 'Event.precio', 'Event.cupo'),
@@ -58,7 +58,7 @@ class PublicController extends AppController
 		$this->set('ventaLista', LivegoConfig::mercadoPagoListo());
 	}
 
-	/** Página del partido con formulario de compra. */
+	/** Página del evento con formulario de compra. */
 	public function comprar($id = null)
 	{
 		$event = $this->Event->find('first', array(
@@ -67,7 +67,7 @@ class PublicController extends AppController
 			'recursive' => -1,
 		));
 		if (!$event) {
-			throw new NotFoundException('Este partido no está a la venta.');
+			throw new NotFoundException('Este evento no está a la venta.');
 		}
 		$ev = $event['Event'];
 		$quedan = empty($ev['cupo']) ? self::MAX_POR_COMPRA : max(0, (int)$ev['cupo'] - $this->vendidas($ev['id']));
@@ -86,7 +86,7 @@ class PublicController extends AppController
 			$errores[] = 'Revisá el email: ahí te llegan el usuario y la clave.';
 		}
 		if ($cantidad < 1 || $cantidad > min(self::MAX_POR_COMPRA, $quedan)) {
-			$errores[] = $quedan < 1 ? 'No quedan entradas para este partido.' : 'Elegí entre 1 y ' . min(self::MAX_POR_COMPRA, $quedan) . ' entradas.';
+			$errores[] = $quedan < 1 ? 'No quedan entradas para este evento.' : 'Elegí entre 1 y ' . min(self::MAX_POR_COMPRA, $quedan) . ' entradas.';
 		}
 		if (!LivegoConfig::mercadoPagoListo()) {
 			$errores[] = 'La venta online todavía no está habilitada.';
@@ -174,10 +174,10 @@ class PublicController extends AppController
 		return $this->response;
 	}
 
-	/** Partidos anteriores publicados en YouTube. */
+	/** Eventos anteriores publicados en YouTube. */
 	public function archivo()
 	{
-		$this->set('title_for_layout', 'Partidos anteriores');
+		$this->set('title_for_layout', 'Eventos anteriores');
 		$this->set('events', $this->Event->find('all', array(
 			'conditions' => array('Event.youtube_archivo <>' => '', 'Event.youtube_archivo IS NOT NULL'),
 			'fields' => array('Event.id', 'Event.titulo', 'Event.fecha', 'Event.descripcion', 'Event.youtube_archivo', 'Event.imagen'),

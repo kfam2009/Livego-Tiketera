@@ -1,7 +1,8 @@
-<h1 class="mb-1">Partidos anteriores</h1>
-<p class="text-muted mb-4">Las transmisiones completas de partidos ya jugados.</p>
+<div class="lg-eyebrow">Archivo</div>
+<h1 class="lg-titulo">Eventos anteriores</h1>
+<p class="lg-sub">Las transmisiones completas de eventos que ya pasaron.</p>
 <?php if (empty($events)) { ?>
-	<div class="alert alert-light">Todavía no hay partidos publicados.</div>
+	<div class="alert alert-light">Todavía no hay eventos publicados.</div>
 <?php } else { ?>
 <div class="row">
 	<?php foreach ($events as $e) { $ev = $e['Event']; $embed = livego_embed_url($ev['youtube_archivo']); ?>
@@ -12,7 +13,7 @@
 			</div>
 			<div class="body">
 				<h3><?php echo h($ev['titulo']); ?></h3>
-				<div class="lg-fecha"><?php echo date('d/m/Y', strtotime($ev['fecha'])); ?></div>
+				<span class="lg-chip"><i class="far fa-calendar-alt"></i> <?php echo date('d/m/Y', strtotime($ev['fecha'])); ?></span>
 			</div>
 		</div>
 	</div>

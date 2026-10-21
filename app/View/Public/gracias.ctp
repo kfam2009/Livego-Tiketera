@@ -7,9 +7,9 @@ $estado = $o['estado'];
 	<div class="col-lg-8">
 		<div class="lg-card"><div class="body">
 		<?php if ($estado === 'aprobado') { ?>
-			<h1 class="mb-0"><i class="fas fa-check-circle text-success mr-1"></i> ¡Listo! Ya tenés tu entrada</h1>
+			<h1 class="mb-0"><i class="fas fa-check-circle mr-1" style="color:var(--green)"></i> ¡Listo! Ya tenés tu entrada</h1>
 			<p class="mb-1">Para <strong><?php echo h($ev['titulo']); ?></strong> · <?php echo date('d/m/Y H:i', strtotime($ev['fecha'])); ?> hs</p>
-			<p class="text-danger mb-2"><strong>Guardá estos datos.</strong> <?php echo $emailListo ? 'También te los mandamos a ' . h($o['email']) . '.' : ''; ?></p>
+			<p class="mb-2" style="color:var(--warn)"><strong>Guardá estos datos.</strong> <?php echo $emailListo ? 'También te los mandamos a ' . h($o['email']) . '.' : ''; ?></p>
 			<table class="table table-bordered mb-2">
 				<thead><tr><th>Entrada</th><th>Usuario</th><th>Clave</th></tr></thead>
 				<tbody>
@@ -48,7 +48,7 @@ $estado = $o['estado'];
 			<h1 class="mb-0">Pago devuelto</h1>
 			<p class="mb-0">Este pago fue devuelto o desconocido, así que la entrada quedó sin efecto.</p>
 		<?php } else { ?>
-			<h1 class="mb-0"><i class="fas fa-times-circle text-danger mr-1"></i> El pago no se completó</h1>
+			<h1 class="mb-0"><i class="fas fa-times-circle mr-1" style="color:var(--red)"></i> El pago no se completó</h1>
 			<p>Mercado Pago rechazó o canceló el pago. No se te cobró nada.</p>
 			<?php echo $this->Html->link('Intentar de nuevo', '/comprar/' . $ev['id'], array('class' => 'btn btn-lg-comprar')); ?>
 		<?php } ?>

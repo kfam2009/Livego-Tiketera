@@ -7,7 +7,7 @@ echo $this->element('section-header', array('section' => h($ev['titulo']), 'sect
 	.lg-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 	.lg-info img { width: 100%; height: auto; border-radius: 6px; display: block; }
 	.lg-info h3 { margin: 15px 0 5px; font-weight: 700; line-height: 1.2; }
-	.lg-fecha { display: inline-block; background: #0088cc; color: #fff; padding: 2px 10px; border-radius: 4px; font-size: .9em; }
+	.lg-fecha { display: inline-block; background: #121317; color: #4cc9f0; border: 1px solid #33363e; padding: 2px 10px; border-radius: 4px; font-size: .9em; }
 	.lg-info h5 { margin: 18px 0 4px; }
 	.lg-ayuda { margin-top: 10px; font-size: .95em; }
 </style>
@@ -15,7 +15,7 @@ echo $this->element('section-header', array('section' => h($ev['titulo']), 'sect
 	<div class="col-lg-9 col-xl-9 order-lg-2 mb-4">
 		<section class="card">
 			<div class="card-body p-2">
-				<?php if ($modo === 'vivo') { ?><div class="mb-2"><span class="badge badge-danger">EN VIVO</span> <small class="text-muted">Si todavía no empezó, vas a ver un aviso: dejá la página abierta o recargala a la hora del partido.</small></div><?php } ?>
+				<?php if ($modo === 'vivo') { ?><div class="mb-2"><span class="badge badge-danger">EN VIVO</span> <small class="text-muted">Si todavía no empezó, vas a ver un aviso: dejá la página abierta o recargala a la hora del evento.</small></div><?php } ?>
 				<?php if ($modo === 'repeticion') { ?><div class="mb-2"><span class="badge badge-primary">REPETICIÓN</span></div><?php } ?>
 				<?php if ($error) { ?>
 					<div class="alert alert-warning"><?php echo h($error); ?></div>

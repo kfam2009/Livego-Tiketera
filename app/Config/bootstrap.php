@@ -129,7 +129,7 @@ function livego_imagen_url($event) {
 	if (strpos($img, 'db:') === 0) {
 		return Router::url(array('controller' => 'events', 'action' => 'imagen', $event['id'], '?' => array('v' => substr($img, 3))));
 	}
-	return 'eventos/' . ($img !== '' ? $img : 'banner.jpeg');
+	return 'eventos/' . ($img !== '' && $img !== 'default.jpg' ? $img : 'livego-generica.svg');
 }
 
 /**
