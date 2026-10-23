@@ -17,7 +17,7 @@ class PublicController extends AppController
 	public function beforeFilter()
 	{
 		parent::beforeFilter();
-		$this->Auth->allow('index', 'comprar', 'gracias', 'estado', 'archivo', 'mercadopago', 'nosotros');
+		$this->Auth->allow('index', 'comprar', 'gracias', 'estado', 'archivo', 'mercadopago', 'nosotros', 'recuperar');
 		$this->layout = 'publico';
 	}
 
@@ -172,6 +172,55 @@ class PublicController extends AppController
 		$this->response->type('json');
 		$this->response->body(json_encode(array('estado' => $order['Order']['estado'])));
 		return $this->response;
+	}
+
+	/**
+	 * "¿Olvidaste tu usuario o clave?": reenvía por mail los accesos de las compras aprobadas.
+	 * Siempre responde lo mismo para no revelar qué mails compraron, y limita los intentos.
+	 */
+	public function recuperar()
+	{
+		$this->layout = 'auth';
+		$this->set('title_for_layout', 'Recuperar acceso');
+		$this->set('enviado', false);
+		if (!$this->request->is('post')) {
+			return;
+		}
+		$d = isset($this->request->data['Recuperar']) ? $this->request->data['Recuperar'] : array();
+		$email = strtolower(trim(isset($d['email']) ? $d['email'] : ''));
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$this->set('error', 'Revisá el email.');
+			return;
+		}
+		$ip = $this->request->clientIp();
+		$ahora = time();
+		$limites = array('ip_' . md5($ip) => 5, 'mail_' . md5($email) => 3); // por hora
+		foreach ($limites as $k => $max) {
+			$usos = array_filter((array)Cache::read('recuperar_' . $k, 'default'), function ($t) use ($ahora) { return $t > $ahora - 3600; });
+			if (count($usos) >= $max) {
+				$this->set('error', 'Ya pediste varios reenvíos. Esperá un rato y revisá también la carpeta de spam.');
+				return;
+			}
+			$usos[] = $ahora;
+			Cache::write('recuperar_' . $k, array_values($usos), 'default');
+		}
+		$orders = $this->Order->find('all', array(
+			'conditions' => array('LOWER(Order.email)' => $email, 'Order.estado' => 'aprobado', 'Order.created >=' => date('Y-m-d H:i:s', strtotime('-180 days'))),
+			'fields' => array('Order.id'),
+			'order' => array('Order.id' => 'DESC'),
+			'limit' => 10,
+			'recursive' => -1,
+		));
+		foreach ($orders as $o) {
+			try {
+				LivegoVentas::enviarAccesos($o['Order']['id']);
+			} catch (Exception $e) {
+				CakeLog::write('error', 'Recuperar acceso ' . $o['Order']['id'] . ': ' . $e->getMessage());
+			}
+		}
+		error_log('[livego] Recuperar acceso: ' . count($orders) . ' compra(s) para el mail pedido');
+		$this->set('enviado', true);
+		$this->set('email', $email);
 	}
 
 	/** Quiénes somos. */

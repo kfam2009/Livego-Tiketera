@@ -47,6 +47,8 @@
         </div>
       </div>
 
+      <p class="text-center mt-3 mb-0"><a href="<?php echo $this->Html->url('/recuperar-acceso'); ?>">¿Olvidaste tu usuario o clave?</a></p>
+
       <!-- <span class="mt-3 mb-3 line-thru text-center text-uppercase">
         <span>or</span>
       </span>
