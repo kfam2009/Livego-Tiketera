@@ -9,6 +9,7 @@ class LivegoMailer {
 
 	public static function enviar($para, $nombre, $asunto, $html) {
 		if (!LivegoConfig::emailListo()) {
+			error_log('[livego] Email no enviado: faltan BREVO_API_KEY o MAIL_FROM');
 			return false;
 		}
 		$base = LivegoConfig::get('BREVO_API_BASE', 'https://api.brevo.com/v3');
@@ -21,8 +22,10 @@ class LivegoMailer {
 		$r = LivegoHttp::request('POST', $base . '/smtp/email', array('api-key' => LivegoConfig::get('BREVO_API_KEY')), $body);
 		if ($r['code'] >= 300) {
 			CakeLog::write('error', 'Brevo ' . $r['code'] . ': ' . substr($r['raw'], 0, 300));
+			error_log('[livego] Brevo ' . $r['code'] . ' al enviar a ' . $para . ': ' . substr($r['raw'], 0, 300));
 			return false;
 		}
+		error_log('[livego] Email enviado por Brevo a ' . $para . ' (' . $r['code'] . ')');
 		return true;
 	}
 
